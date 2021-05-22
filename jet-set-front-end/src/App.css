@@ -1,3 +1,8 @@
+.main-flexbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .App {
   text-align: center;
 }

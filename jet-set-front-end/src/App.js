@@ -6,7 +6,7 @@ const createCity = (name, temperature) => ({ name, temperature });
 const mockCityList = [
   createCity("tokyo", 100),
   createCity("dubai", 100),
-  createCity("san francisco", 100),
+  createCity("san francisco", 20),
   createCity("los angeles", 100),
   createCity("new york", 100),
   createCity("berlin", 100),
@@ -17,7 +17,7 @@ function App() {
   return (
     <>
     <SearchBar></SearchBar>
-      <CityWrapper cityList={mockCityList}></CityWrapper>
+    <CityWrapper cityList={mockCityList}></CityWrapper>
     </>
   );
 }
