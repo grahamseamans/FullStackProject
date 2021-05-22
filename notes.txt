@@ -1,0 +1,114 @@
+﻿Get API Keys
+
+
+Make Github Repo - Done YAY :D
+
+
+Decide on interfaces (what objects are we passing back and forth?)
+* To backend
+   * Add city (from searchbar?)
+* From backend
+   * List of city objects
+      * Name
+      * Tickets
+         * Ticket price - string or number
+         * Link to ticket price - href
+      * Weather
+         * Temp … numbers
+         * Wind ... number
+      * Events
+         * Event info
+
+
+Make backend
+* Daniel?
+
+
+        Graham Notes:
+* maybe 2 options?
+   * We make a seperate backend
+      * Im trying to wrap my head around how this would work, but it seems like we would be effectively hosting two things - 
+         * One front end service using the ‘create-react-app’ infrastructure
+         * A second backend ~restful api
+         * Both would need to be hosted separately I think, and would talk to each other through http calls
+      * This would allow us to store a list of cities that the user went to without using cookies
+      * Could use AWS to create an instance of EC2 server 
+         * Ssh into it
+         * Create a public ip
+      * Use heroku like in other class projects
+
+
+   * Make the “backend” in create-react-app (would probably be super easy) 
+      * Could use express https://dev.to/loujaybee/using-create-react-app-with-express
+      * So we could do our whole backend using this in react if we wanted to do it that way https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch 
+
+
+* Create getters once we know what the front end will want.
+* Store cookies to know what cities the user has added before
+* If no cookie add users current location and start from there
+* When user adds a new city should it go above or below their current location (where in the list should it be appended to)?
+
+
+Make frontend
+* Use react all the way? (can we?)
+   * Make a card class thing - add a border around the whole thing
+      * Characteristics
+         * Flexbox so horizontal when screen is wide
+            * Wide
+               * City , graphics, price
+            * Skinny
+               * City
+               * Graphics
+               * price
+      * Fields
+         * City (href to city page)
+         * Graphics - React3fiber - react component
+         * Ticket price (href to skyscanner)
+   * The search bar
+      * Text field - only thing with border?
+      * Sends a call back to the back end to add a city to the city list
+      * How does it it show the user if the call to the back end gets an error?
+   * New div - now the cards (everything else (the only other thing))
+      * Stick the cards into a flexbox so they populate the screen and work with different screen widths - fill them in rows...
+      * Iterate over list of cities with their data
+      * Fill out the cards data with the lists data
+
+
+* Get talking with API’s - make the meta-objects
+   * Anything that we want to use and reuse should be a react component
+      * So each tile / card would be a react component
+      * Takes in arguments - props 
+         * Props are immutable
+         * Children should not change the props they receive
+      * Components can have state
+         * That’s just called state
+      * Anytime props or state change it should rerender
+         * So you can redeclare things all the time and it wont rerender them, so you declare stuff all the time
+
+
+* How do we make the cards like we have above? - how to throw the card into a div flexbox
+   * For each loop through the json of cities_data (taken from calling getCitiesData()
+      * Takes each city (foreach…)
+         * makes a card for it
+         * Adds the card to the cities div (on mainpage)
+* How do we make a card? - what’s the dumbest way to make a card using react hooks?
+   * Sounds like a react template? Do these exist? 
+   * It could also be a function that takes in the city parameters and spits out the html for a city
+* Where do we call the back end? - Where do we ask for the information in all of this?
+   * Get cities data - list of cities (not all the city info) - for main_page
+   * Get city data - one city (all of the city info) - for city_page
+
+
+* Create responsive web design (mobile, tablet views)
+* Home page
+   * Create search bar
+   * Create divs that displays city objects (see above)
+      * Fun graphics (?)
+* Page for individual cities
+   * Could we use the same card for both of these things and just have the events field be empty on the one in the main page?
+   * Use the same card creation function (template?) from main_page, but just not supply an events field in the main page… - maybe we can get away with using the same code for the city_page as in the main_page / cities_page
+
+
+* How react seems to work?
+   * Little html frame
+   * Stick things into the html frame using react (js)
