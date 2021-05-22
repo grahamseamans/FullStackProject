@@ -72,6 +72,8 @@ Make frontend
       * Stick the cards into a flexbox so they populate the screen and work with different screen widths - fill them in rows...
       * Iterate over list of cities with their data
       * Fill out the cards data with the lists data
+   * https://reactrouter.com/ will allow us to route between webpages
+   * What this type of webpage is called that we're making https://en.wikipedia.org/wiki/Single-page_application#:~:text=A%20single%2Dpage%20application%20(SPA,browser%20loading%20entire%20new%20pages. 
 
 
 * Get talking with API’s - make the meta-objects
