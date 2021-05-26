@@ -36,10 +36,6 @@ Make backend
          * Ssh into it
          * Create a public ip
       * Use heroku like in other class projects
-   * Make the “backend” in create-react-app (would probably be super easy) 
-      * Because what we're doing is simple, we could also just use something like https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch 
-      * Could also use express https://dev.to/loujaybee/using-create-react-app-with-express
-
 
 * Create getters once we know what the front end will want.
 * Store cookies to know what cities the user has added before

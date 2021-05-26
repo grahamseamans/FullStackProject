@@ -3,13 +3,17 @@
   flex-wrap: wrap;
 }
 
-.App {
-  text-align: center;
+.city-graphics {
+  width: 200px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.city-card {
+  margin: 10px;
+  background-color: beige;
+}
+
+.App {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -18,7 +22,7 @@
   }
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -40,4 +44,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
