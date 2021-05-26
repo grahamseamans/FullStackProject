@@ -3,15 +3,6 @@
   flex-wrap: wrap;
 }
 
-.city-graphics {
-  width: 200px;
-}
-
-.city-card {
-  margin: 10px;
-  background-color: beige;
-}
-
 .App {
   text-align: center;
 }
