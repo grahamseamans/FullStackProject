@@ -42,7 +42,7 @@ export function CityCard(props) {
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardActions>
-          <Button labelSize={{ fontSize: 15 }}> {name}</Button>
+          <Button> {name}</Button>
         </CardActions>
         <CardContent>
           <Typography variant="h5" component="h2">
