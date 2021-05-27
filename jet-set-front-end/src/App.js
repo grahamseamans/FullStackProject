@@ -1,5 +1,5 @@
 import { CityWrapper } from './components/CityWrapper';
-import { SearchBar } from './components/SearchBar';
+import { NavBar } from './components/NavBar';
 import './App.css';
 
 const createCity = (name, temperature, wind) => ({ name, temperature, wind });
@@ -16,7 +16,7 @@ const mockCityList = [
 function App() {
   return (
     <>
-    <SearchBar></SearchBar>
+    <NavBar />
     <CityWrapper cityList={mockCityList}></CityWrapper>
     </>
   );
