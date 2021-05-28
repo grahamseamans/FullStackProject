@@ -37,23 +37,23 @@ const useStyles = makeStyles(() => {
 export function CityCard(props) {
   const classes = useStyles();
 
-  const { name, temperature, wind } = props;
+  const {city} = props;
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardActions>
-          <Button> {name}</Button>
+          <Button> {city.name}</Button>
         </CardActions>
         <CardContent>
           <Typography variant="h5" component="h2">
             Weather
           </Typography>
-          <Typography color="textSecondary">Temp: {temperature}</Typography>
-          <Typography color="textSecondary">Wind: {wind}</Typography>
+          <Typography color="textSecondary">Temp: {city.temperature}</Typography>
+          <Typography color="textSecondary">Wind: {city.wind}</Typography>
         </CardContent>
       </div>
       <div className={classes.graphics}>
-        <CityGraphics temperature={temperature} wind={wind}></CityGraphics>
+        <CityGraphics temperature={city.temperature} wind={city.wind}></CityGraphics>
       </div>
     </Card>
   );

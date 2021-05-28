@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { CityWrapper } from './components/CityWrapper';
 import { NavBar } from './components/NavBar';
 import './App.css';
@@ -28,10 +29,13 @@ const mockCityList = [
 // );
 
 function App() {
+  const [cityList, setCityList] = useState(mockCityList);
+  // const [cityList, setCityList] = useState([]); // how we'll initialize when we have backend hooked up
+  // check comment above for example of how to use setCityList in the searchbar
   return (
     <>
       <NavBar />
-      <CityWrapper cityList={mockCityList}></CityWrapper>
+      <CityWrapper cityList={cityList}></CityWrapper>
     </>
   );
 }
