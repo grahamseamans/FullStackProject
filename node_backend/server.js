@@ -54,24 +54,146 @@ app.get('/weather', (req, res) => {
 
 app.get('/events', (req, res) => {
 
-    let city = req.query.city
-    let country = req.query.country
-    console.log(`received event request for: ${city}`);
+    let city;
+    let state_code;
+    let country_code;
+    let keyword;
+    
+    if(req.query.city)
+        city = "&city=" + req.query.city;
+    else
+        city = '';
 
-    fetch(`https://app.ticketmaster.com/discovery/v2/events?apikey=${ticketmaster_api}&radius=50&unit=miles&locale=*&city=${city}`)
+    if(req.query.state_code)
+        state_code = "&stateCode=" + req.query.state_code
+    else
+        state_code = '';
+
+    if(req.query.country_code)
+        country_code = "&countryCode=" + req.query.country_code
+    else
+        country_code = '';
+
+    if(req.query.keyword)
+        keyword = "&keyword=" + req.query.keyword
+    else
+        keyword = '';
+    
+    console.log(`received event request for: 
+    ` + `city: ${city}
+    ` + `state: ${state_code}
+    ` + `country: ${country_code}
+    ` + `keyword: ${keyword}`);
+
+    fetch(`https://app.ticketmaster.com/discovery/v2/events?apikey=${ticketmaster_api}&radius=50&unit=miles`
+           + `&locale=*${city}${state_code}${country_code}${keyword}&size=10`)
         .then(checkResponseStatus)
         .then(res => res.json())
         .then(json => {
-            names = [];            
 
-            json._embedded.events.forEach(event => {
+            let return_obj = {
+                events: []            
+            }
+
+            let name;
+            let url;
+            let date;
+            let time;
+            let info;
+            let price_min;
+            let price_max;
+            let seatmap_url;
+            let venue_name;
+            let venue_city;
+            let venue_state;
+            let venue_country;
+            let venue_address;
+
+            if(json.page.totalElements > 0)
+            {
+                json._embedded.events.forEach(event => {
             
-            names.push(`${event.dates.start.localDate}:  ${event.name}`)
-            console.log(event.name + event.dates.start.localDate)})
-            
-            res.send(names);
+                console.log(event);
+
+                if(event.name !== undefined)
+                    name = event.name;
+                else
+                    name = '';
+                if(event.url !== undefined)
+                    url = event.url;
+                else
+                    url = '';
+                if(event.dates.start.localDate !== undefined)
+                    date = event.dates.start.localDate;
+                else
+                    date = '';
+                if(event.dates.start.localTime !== undefined)
+                    time = event.dates.start.localTime;
+                else
+                    time = '';
+                if(event.info !== undefined)
+                    info = event.info;
+                else
+                    info = '';
+                if(event.priceRanges !== undefined)
+                    price_min = event.priceRanges[0].min;
+                else
+                    price_min = '';
+                if(event.priceRanges !== undefined)
+                    price_max = event.priceRanges[0].max;
+                else
+                    price_max = '';
+                if(event.seatmap !== undefined)
+                    seatmap_url = event.seatmap.staticURL;
+                else
+                    seatmap_url = '';
+                if(event._embedded.venues !== undefined)
+                    venue_name = event._embedded.venues[0].name;
+                else
+                    venue_name = '';
+                if(event._embedded.venues !== undefined)
+                    venue_city = event._embedded.venues[0].city;
+                else
+                    venue_city = '';
+                if(event._embedded.venues !== undefined)
+                    venue_state = event._embedded.venues[0].state;
+                else
+                    venue_state = '';
+                if(event._embedded.venues !== undefined)
+                    venue_country = event._embedded.venues[0].country
+                else
+                    venue_country = '';
+                if(event._embedded.venues !== undefined)
+                    venue_address = event._embedded.venues[0].address;
+                else
+                    venue_address = '';
+
+                let event_object  = {
+                    name: name,
+                    url: url,
+                    date: date,
+                    time: time,
+                    info: info,
+                    price_min: price_min,
+                    price_max: price_max,
+                    seatmap_url: seatmap_url,
+                    venue_name: venue_name,
+                    venue_city: venue_city,
+                    venue_state: venue_state,
+                    venue_country: venue_country,
+                    venue_address: venue_address
+                }
+
+                return_obj.events.push(event_object)
+                console.log(event_object)})
+            }
+          
+            console.log(return_obj);
+            res.send(JSON.stringify(return_obj));
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err);
+            res.send(error)});
 })
 
 app.get('/autocomplete', (req, res) => {
