@@ -51,7 +51,7 @@ export function NavBar(props) {
           );
         }}
         renderOption={(option) => {
-          return <h4>{`${option.name}: ${option.manufacturer}`}</h4>; //display value
+          return <h4>{`${option.name}`}</h4>; //display value
         }}
         PopperComponent={CustomPopper} //required (as far as I can tell) in order to target popper elements for custom styling
       />
