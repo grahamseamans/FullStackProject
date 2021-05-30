@@ -34,7 +34,7 @@ function App() {
   // check comment above for example of how to use setCityList in the searchbar
   return (
     <>
-      <NavBar />
+      <NavBar cityList={cityList}/>
       <CityWrapper cityList={cityList}></CityWrapper>
     </>
   );
