@@ -3,8 +3,10 @@ import { CityGraphics } from "./CityGraphics";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
+import { useCityContext } from "../components/CityContext";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => {
@@ -36,14 +38,17 @@ const useStyles = makeStyles(() => {
 });
 
 export function CityCard(props) {
-  const classes = useStyles();
-
   const { city } = props;
+  const classes = useStyles();
+  const { getCityUrl } = useCityContext();
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardActions>
-          <Button> {city.name}</Button>
+          <Link to={getCityUrl(city)}>
+            {city.name}
+          </Link>
+          {/* <Button onClick={() => { alert('clicked') }}> {city.name}</Button> */}
         </CardActions>
         <CardContent>
           <Typography color="textSecondary">

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { CityGraphics } from "../components/CityGraphics";
-import { NavBar } from "../components/NavBar";
+import { CityCard } from "../components/CityCard";
+// import { NavBar } from "../components/NavBar";
 import { useCityContext } from "../components/CityContext";
 import { useParams } from "react-router-dom";
 
@@ -25,8 +25,7 @@ export function CityPage(props) {
   return (
     <>
       {/* <NavBar className={classes.nav}/> */}
-      <div>{city}</div>
-      {/* <CityGraphics city={city}></CityGraphics> */}
+      <CityCard city={city}></CityCard>
     </>
   );
 }

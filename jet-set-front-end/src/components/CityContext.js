@@ -1,10 +1,10 @@
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { createContext, useContext, useState } from "react";
 
 const CityContext = createContext({
   cityList: [],
   handleNewCity: (city) => {},
   getCityFromUrl: (url) => {},
+  getCityUrl: (city) => {},
 });
 
 export const useCityContext = () => useContext(CityContext);
@@ -14,17 +14,24 @@ export const CityProvider = ({ children }) => {
 
   const handleNewCity = (newCity) => {
     console.log("Adding new city", newCity);
-    if (!inCityList(cityList, newCity)) setCityList([...cityList, newCity]);
+    if (!inCityList(cityList, newCity)) setCityList([newCity, ...cityList]);
   };
+
   const getCityFromUrl = (url) => {
     const cityNameList = url.split("-");
     const foundCity = cityList.find(
       (city) =>
-        city[0].toLowerCase() === cityNameList.name.toLowerCase() &&
-        city[1].toLowerCase() === cityNameList.state.toLowerCase() &&
-        city[2].toLowerCase() === cityNameList.country.toLowerCase()
+        cityNameList[0] === city.name &&
+        cityNameList[1] === city.state &&
+        cityNameList[2] === city.country
     );
+    console.log(foundCity.name);
     return foundCity;
+  };
+  const getCityUrl = (city) => {
+    const string = "/" + city.name + "-" + city.state + "-" + city.country;
+    console.log("getting city url string: ", string);
+    return string;
   };
 
   return (
@@ -33,6 +40,7 @@ export const CityProvider = ({ children }) => {
         cityList,
         handleNewCity,
         getCityFromUrl,
+        getCityUrl,
       }}
     >
       {children}
