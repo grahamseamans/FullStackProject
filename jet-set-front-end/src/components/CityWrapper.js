@@ -1,7 +1,10 @@
 import { CityCard } from "./CityCard";
+import { useCityContext } from "./CityContext"
+
 
 export function CityWrapper(props) {
-  const { cityList, className } = props;
+  const { cityList } = useCityContext();
+  const { className } = props;
   return (
     <div className={`main-flexbox ${className}`}>
       {cityList.map((city) => (

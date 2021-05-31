@@ -1,45 +1,31 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { CityWrapper } from "./components/CityWrapper";
-import { NavBar } from "./components/NavBar";
 import "./App.css";
-
-const useStyles = makeStyles(() => {
-  return {
-    nav: {
-      position: "relative",
-      zIndex: 10,
-    },
-    wrapper: {
-      position: "relative",
-      zIndex: 0,
-    },
-  };
-});
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
+import { CityProvider } from "./components/CityContext";
 
 function App() {
-  const classes = useStyles();
-  const [cityList, setCityList] = useState([]);
-
-  const handleNewCity = (newCity) => {
-    console.log("Adding new city", newCity);
-    if (
-      cityList.find(({ name, state }) => {
-        return name === newCity.name && state === newCity.state;
-      })
-    )
-      return;
-    console.log(newCity);
-    setCityList([...cityList, newCity]);
-  };
   return (
-    <>
-      <NavBar className={classes.nav} handleNewCity={handleNewCity} />
-      <CityWrapper
-        className={classes.wrapper}
-        cityList={cityList}
-      ></CityWrapper>
-    </>
+    <CityProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route exact path="/:id">
+            <div>I am a city page</div>
+          </Route>
+          <Route path="/:id/events">
+            <div>I am a city event page</div>
+          </Route>
+        </Switch>
+      </Router>
+    </CityProvider>
   );
 }
 

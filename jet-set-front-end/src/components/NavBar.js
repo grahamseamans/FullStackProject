@@ -4,6 +4,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { fixCity } from "./Utils";
+import { useCityContext } from "./CityContext"
+
 
 // const fetch = require("node-fetch");
 
@@ -26,8 +28,10 @@ const CustomPopper = function (props) {
 };
 
 export function NavBar(props) {
-  const { handleNewCity, ...etc } = props;
+
+  const { handleNewCity } = useCityContext();
   const [autocompleteList, setAutocompleteList] = useState([]);
+
   const onChange = (_, input_string) => {
     if (!input_string) return;
     console.log("input string", input_string);
@@ -54,7 +58,7 @@ export function NavBar(props) {
   return (
     <>
       <Autocomplete
-        {...etc}
+        props
         id="navbar"
         freeSolo={true}
         onInputChange={onInputChange}
