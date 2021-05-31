@@ -6,7 +6,6 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { fixCity } from "./Utils";
 import { useCityContext } from "./CityContext"
 
-
 // const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) =>
@@ -61,8 +60,8 @@ export function NavBar(props) {
         props
         id="navbar"
         freeSolo={true}
-        onInputChange={onInputChange}
         onChange={onChange}
+        onInputChange={onInputChange}
         options={autocompleteList}
         style={{ width: 350, margin: 20 }}
         renderInput={(params) => {

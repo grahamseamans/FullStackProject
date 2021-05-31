@@ -1,8 +1,10 @@
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { createContext, useContext, useState } from "react";
 
 const CityContext = createContext({
   cityList: [],
   handleNewCity: (city) => {},
+  getCityFromUrl: (url) => {},
 });
 
 export const useCityContext = () => useContext(CityContext);
@@ -14,12 +16,23 @@ export const CityProvider = ({ children }) => {
     console.log("Adding new city", newCity);
     if (!inCityList(cityList, newCity)) setCityList([...cityList, newCity]);
   };
+  const getCityFromUrl = (url) => {
+    const cityNameList = url.split("-");
+    const foundCity = cityList.find(
+      (city) =>
+        city[0].toLowerCase() === cityNameList.name.toLowerCase() &&
+        city[1].toLowerCase() === cityNameList.state.toLowerCase() &&
+        city[2].toLowerCase() === cityNameList.country.toLowerCase()
+    );
+    return foundCity;
+  };
 
   return (
     <CityContext.Provider
       value={{
         cityList,
         handleNewCity,
+        getCityFromUrl,
       }}
     >
       {children}
@@ -40,4 +53,3 @@ const inCityList = (cityList, newCity) => {
     return true;
   else return false;
 };
-

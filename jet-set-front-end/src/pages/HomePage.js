@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CityWrapper } from "../components/CityWrapper";
 import { NavBar } from "../components/NavBar";

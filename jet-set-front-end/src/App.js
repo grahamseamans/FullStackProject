@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
+import { CityPage } from "./pages/CityPage";
 import { CityProvider } from "./components/CityContext";
 
 function App() {
@@ -17,10 +18,10 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/:id">
-            <div>I am a city page</div>
+          <Route exact path="/:cityIdString">
+            <CityPage />
           </Route>
-          <Route path="/:id/events">
+          <Route path="/:cityIdString/events">
             <div>I am a city event page</div>
           </Route>
         </Switch>
