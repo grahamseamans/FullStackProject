@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { CityWrapper } from './components/CityWrapper';
-import { NavBar } from './components/NavBar';
-import './App.css';
+import React, { useState } from "react";
+import { CityWrapper } from "./components/CityWrapper";
+import { NavBar } from "./components/NavBar";
+import "./App.css";
 
 // const createCity = (name, temperature, wind) => ({ name, temperature, wind });
 // const mockCityList = [
@@ -25,10 +25,12 @@ function App() {
 
   const handleNewCity = (newCity) => {
     console.log("Adding new city", newCity);
-    if (cityList.find(({ name: { name, state } }) => {
-      return name === newCity.name.name && state === newCity.name.state;
-    }))
-      return
+    if (
+      cityList.find(({ name, state }) => {
+        return name === newCity.name && state === newCity.state;
+      })
+    )
+      return;
     console.log(newCity);
     setCityList([...cityList, newCity]);
   };

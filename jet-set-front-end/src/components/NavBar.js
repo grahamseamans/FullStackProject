@@ -31,28 +31,11 @@ export function NavBar(props) {
 
   const onChange = (_, input_string) => {
     console.log("input string", input_string);
-    let cityDetails = "";
-    fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
-      .then((response) => response.json())
-      .then((body) => body[0].split(", "))
-      .then((details) => {
-        cityDetails = details;
-        return fetch(
-          `http://localhost:4000/weather?city=${cityDetails[0]}&state=${cityDetails[1]}&country${cityDetails[2]}`
-        );
-      })
+    fetch(`http://localhost:4000/cityInfo?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
-        console.log(body);
-        console.log("cityDetails", cityDetails);
-        handleNewCity({
-          name: {
-            name: cityDetails[0],
-            state: cityDetails[1],
-            country: cityDetails[2],
-          },
-          weather: body,
-        });
+        console.log("cityObject", body);
+        return handleNewCity(body)
       })
       .catch((err) => console.log(err));
   };

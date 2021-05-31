@@ -26,44 +26,36 @@ puts it to a color
 
 function Box(props) {
   const { temperature, wind } = props;
-  // This reference will give us direct access to the THREE.Mesh object
   const mesh = useRef();
-  // Set up state for the hovered and active state
-  //   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  // useFrame((state, delta) => (mesh.current.rotation.x += windToSpin(wind)));
   useFrame((state, delta) => {
     mesh.current.rotation.y += windToSpin(wind);
     mesh.current.rotation.x = mesh.current.rotation.y / 10;
   });
-  // Return the view, these are regular Threejs elements expressed in JSX
   return (
     <mesh
-      //   position={position}
       position={randomPosition()}
       ref={mesh}
       scale={active ? 1.5 : 1}
       onClick={(event) => setActive(!active)}
-      //   onPointerOver={(event) => setHover(true)}
-      //   onPointerOut={(event) => setHover(false)}
     >
       <boxGeometry args={[1.2, 1.1, 1]} />
-      {/* <meshStandardMaterial color={hovered ? "hotpink" : "orange"} /> */}
       <meshStandardMaterial color={colorsFromTemp(temperature)} />
     </mesh>
   );
 }
 
 export function CityGraphics(props) {
-  const { temperature, wind } = props;
+  const { city } = props;
+  const temp = city.weather.main.feels_like
+  const windSpeed = city.weather.wind.speed
   return (
       <Canvas style={{flexGrow:1}}>
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
         <pointLight position={[-10, -10, -10]} />
-        <Box temperature={temperature} wind={wind} />
-        <Box temperature={temperature} wind={wind} />
+        <Box temperature={temp} wind={windSpeed} />
+        <Box temperature={temp} wind={windSpeed} />
       </Canvas>
   );
 }

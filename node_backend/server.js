@@ -39,6 +39,38 @@ app.get("/", (req, res) => {
   res.send(return_obj);
 });
 
+app.get("/cityInfo", (req, res) => {
+  let searchString = req.query.input;
+  console.log(`received cityInfo request for: ${searchString}`);
+  const newCity = {};
+  fetch(
+    `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchString}&types=(cities)&key=${autocomplete_api}`
+  )
+    .then(checkResponseStatus)
+    .then((res) => res.json())
+    .then((json) => {
+      console.log("cityInfo json", json.predictions[0].terms[0].value);
+      const guessTerms = json.predictions[0].terms  
+      newCity.name = guessTerms[0].value;
+      newCity.state = guessTerms[1].value;
+      newCity.country = guessTerms[2].value;
+      console.log("newCity Object", newCity);
+      return newCity
+    })
+    .then((newCity) =>
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${newCity.name},${newCity.state},${newCity.country}&APPID=${weather_api}`
+      )
+    )
+    .then((res) => res.json())
+    .then((weatherResponse) => {
+      newCity.weather = weatherResponse;
+      console.log("cityObject with weather", newCity)
+      res.send(newCity);
+    })
+    .catch((err) => console.log(err));
+});
+
 app.get("/weather", (req, res) => {
   let city = req.query.city;
   let state = req.query.state;
@@ -188,7 +220,7 @@ app.get("/events", (req, res) => {
 app.get("/autocomplete", (req, res) => {
   let city = req.query.city;
   let input_string = req.query.input;
-  console.log(`received event request for: ${city}`);
+  console.log(`received /autocomplete request for: ${city}`);
 
   fetch(
     `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input_string}&types=(cities)&key=${autocomplete_api}`
@@ -200,7 +232,6 @@ app.get("/autocomplete", (req, res) => {
       json.predictions.forEach((guess) => {
         names.push(guess.description);
       });
-      console.log(names);
       res.send(names);
     })
     .catch((err) => console.log(err));

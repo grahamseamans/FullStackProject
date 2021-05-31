@@ -45,15 +45,17 @@ export function CityCard(props) {
           <Button> {city.name}</Button>
         </CardActions>
         <CardContent>
+          <Typography color="textSecondary">{city.state}, {city.country}</Typography>
+          {/* <Typography color="textSecondary">Wind: {city.country}</Typography> */}
           <Typography variant="h5" component="h2">
             Weather
           </Typography>
-          <Typography color="textSecondary">Temp: {city.temperature}</Typography>
-          <Typography color="textSecondary">Wind: {city.wind}</Typography>
+          <Typography color="textSecondary">Temp: {city.weather.main.feels_like}</Typography>
+          <Typography color="textSecondary">Wind: {city.weather.wind.speed}</Typography>
         </CardContent>
       </div>
       <div className={classes.graphics}>
-        <CityGraphics temperature={city.temperature} wind={city.wind}></CityGraphics>
+        <CityGraphics city={city}></CityGraphics>
       </div>
     </Card>
   );
