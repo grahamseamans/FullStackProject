@@ -1,15 +1,19 @@
 const express = require('express')
 const fetch = require('node-fetch')
+var cors = require('cors')
 const bodyParser = require('body-parser')
 require('dotenv').config();
 const app = express()
-const port = 3000
+const port = 4000
 
 weather_api = process.env.OPEN_WEATHER_API_KEY;
 ticketmaster_api = process.env.TICKETMASTER_API_KEY;
 autocomplete_api = process.env.AUTOCOMPLETE_API_KEY;
 
 app.use(express.json())
+
+app.use(cors())
+
 
 function checkResponseStatus(res) {
     if(res.ok){

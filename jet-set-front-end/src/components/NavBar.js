@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) =>
         border: "2px grey",
         minHeight: 200,
         "& li:nth-child(even)": { backgroundColor: "#CCC" },
-        "& li:nth-child(odd)": { backgroundColor: "#FFF" }
-      }
-    }
+        "& li:nth-child(odd)": { backgroundColor: "#FFF" },
+      },
+    },
   })
 );
 
@@ -25,22 +25,28 @@ const CustomPopper = function (props) {
 };
 
 export function NavBar(props) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    // fetch("")
-    //   .then((response) => response.json())
-    //   .then((data) => setData(data));
-    setData(props);
-  });
+  // let handleNewCity = props;
+  const [autocompleteList, setAutocompleteList] = useState([]);
+  // const [data, setData] = useState([]);
 
   return (
     <>
       <Autocomplete
         id="navbar"
-        options={data.cityList}
+        onInputChange={(_, input_string) => {
+          fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
+            .then((response) => response.json())
+            .then((body) => {
+              console.log(body)
+              setAutocompleteList(body)
+            })
+            .catch(err => console.log(err))
+        }}
+        freeSolo={true}
+        getOptionLabel={(option) => option}
+        options={["Banana", "yeet"]}
         style={{ width: 350, margin: 20 }}
-        getOptionLabel={(option) => `${option.name}`} //filter value
+        // getOptionLabel={(option) => `${option.name}`} //filter value
         renderInput={(params) => {
           return (
             <TextField
