@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { fixCity } from "./Utils";
 
 // const fetch = require("node-fetch");
 
@@ -25,17 +26,17 @@ const CustomPopper = function (props) {
 };
 
 export function NavBar(props) {
-  const {handleNewCity} = props;
+  const { handleNewCity, ...etc } = props;
   const [autocompleteList, setAutocompleteList] = useState([]);
-  // const [data, setData] = useState([]);
-
   const onChange = (_, input_string) => {
+    if (!input_string) return;
     console.log("input string", input_string);
     fetch(`http://localhost:4000/cityInfo?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
         console.log("cityObject", body);
-        return handleNewCity(body)
+        body = fixCity(body)
+        return handleNewCity(body);
       })
       .catch((err) => console.log(err));
   };
@@ -53,6 +54,7 @@ export function NavBar(props) {
   return (
     <>
       <Autocomplete
+        {...etc}
         id="navbar"
         freeSolo={true}
         onInputChange={onInputChange}

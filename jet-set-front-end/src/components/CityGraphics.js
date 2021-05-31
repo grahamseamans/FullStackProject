@@ -47,16 +47,16 @@ function Box(props) {
 
 export function CityGraphics(props) {
   const { city } = props;
-  const temp = city.weather.main.feels_like
-  const windSpeed = city.weather.wind.speed
+  const temp = city.weather.main.feels_like;
+  const windSpeed = city.weather.wind.speed;
   return (
-      <Canvas style={{flexGrow:1}}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <Box temperature={temp} wind={windSpeed} />
-        <Box temperature={temp} wind={windSpeed} />
-      </Canvas>
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      <pointLight position={[-10, -10, -10]} />
+      <Box temperature={temp} wind={windSpeed} />
+      <Box temperature={temp} wind={windSpeed} />
+    </Canvas>
   );
 }
 

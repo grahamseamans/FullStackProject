@@ -1,7 +1,6 @@
 const express = require("express");
 const fetch = require("node-fetch");
 var cors = require("cors");
-const bodyParser = require("body-parser");
 require("dotenv").config();
 const app = express();
 const port = 4000;
@@ -11,7 +10,6 @@ ticketmaster_api = process.env.TICKETMASTER_API_KEY;
 autocomplete_api = process.env.AUTOCOMPLETE_API_KEY;
 
 app.use(express.json());
-
 app.use(cors());
 
 function checkResponseStatus(res) {
@@ -40,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cityInfo", (req, res) => {
-  let searchString = req.query.input;
+  const searchString = req.query.input;
   console.log(`received cityInfo request for: ${searchString}`);
   const newCity = {};
   fetch(
@@ -49,13 +47,11 @@ app.get("/cityInfo", (req, res) => {
     .then(checkResponseStatus)
     .then((res) => res.json())
     .then((json) => {
-      console.log("cityInfo json", json.predictions[0].terms[0].value);
-      const guessTerms = json.predictions[0].terms  
+      const guessTerms = json.predictions[0].terms;
       newCity.name = guessTerms[0].value;
       newCity.state = guessTerms[1].value;
       newCity.country = guessTerms[2].value;
-      console.log("newCity Object", newCity);
-      return newCity
+      return newCity;
     })
     .then((newCity) =>
       fetch(
@@ -65,7 +61,6 @@ app.get("/cityInfo", (req, res) => {
     .then((res) => res.json())
     .then((weatherResponse) => {
       newCity.weather = weatherResponse;
-      console.log("cityObject with weather", newCity)
       res.send(newCity);
     })
     .catch((err) => console.log(err));

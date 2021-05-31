@@ -11,6 +11,7 @@ const useStyles = makeStyles(() => {
   let backgroundColor = "beige";
   return {
     root: {
+      position: "relative",
       display: "flex",
       flexDirection: "row",
       minHeight: 300,
@@ -19,10 +20,10 @@ const useStyles = makeStyles(() => {
       backgroundColor: backgroundColor,
     },
     details: {
+      position: "absolute",
+      zIndex: 2,
       color: "black",
       textShadow: `-1px -1px 0 ${backgroundColor}, 1px -1px 0 ${backgroundColor}, -1px 1px 0 ${backgroundColor}, 1px 1px 0 ${backgroundColor}`,
-      position: "absolute",
-      zIndex: 100,
       display: "flex",
       flexDirection: "column",
       flex: 1,
@@ -37,7 +38,7 @@ const useStyles = makeStyles(() => {
 export function CityCard(props) {
   const classes = useStyles();
 
-  const {city} = props;
+  const { city } = props;
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -45,13 +46,18 @@ export function CityCard(props) {
           <Button> {city.name}</Button>
         </CardActions>
         <CardContent>
-          <Typography color="textSecondary">{city.state}, {city.country}</Typography>
-          {/* <Typography color="textSecondary">Wind: {city.country}</Typography> */}
+          <Typography color="textSecondary">
+            {city.state}, {city.country}
+          </Typography>
           <Typography variant="h5" component="h2">
             Weather
           </Typography>
-          <Typography color="textSecondary">Temp: {city.weather.main.feels_like}</Typography>
-          <Typography color="textSecondary">Wind: {city.weather.wind.speed}</Typography>
+          <Typography color="textSecondary">
+            Temp: {city.weather.main.feels_like}
+          </Typography>
+          <Typography color="textSecondary">
+            Wind: {city.weather.wind.speed}
+          </Typography>
         </CardContent>
       </div>
       <div className={classes.graphics}>
