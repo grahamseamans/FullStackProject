@@ -6,7 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import { useCityContext } from "../components/CityContext";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => {
@@ -37,18 +37,20 @@ const useStyles = makeStyles(() => {
   };
 });
 
+
 export function CityCard(props) {
   const { city } = props;
+  const history = useHistory();
   const classes = useStyles();
   const { getCityUrl } = useCityContext();
+  
+  const onClickRoute = () => (history.push(getCityUrl(city)))
+
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardActions>
-          <Link to={getCityUrl(city)}>
-            {city.name}
-          </Link>
-          {/* <Button onClick={() => { alert('clicked') }}> {city.name}</Button> */}
+          <Button onClick={onClickRoute}>{city.name}</Button>
         </CardActions>
         <CardContent>
           <Typography color="textSecondary">
