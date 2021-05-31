@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) =>
       "& .MuiAutocomplete-listbox": {
         border: "2px grey",
         minHeight: 200,
-        "& li:nth-child(even)": { backgroundColor: "#CCC" },
-        "& li:nth-child(odd)": { backgroundColor: "#FFF" },
+        // "& li:nth-child(even)": { backgroundColor: "#CCC" },
+        // "& li:nth-child(odd)": { backgroundColor: "#FFF" },
       },
     },
   })
@@ -25,28 +25,57 @@ const CustomPopper = function (props) {
 };
 
 export function NavBar(props) {
-  // let handleNewCity = props;
+  const {handleNewCity} = props;
   const [autocompleteList, setAutocompleteList] = useState([]);
   // const [data, setData] = useState([]);
+
+  const onChange = (_, input_string) => {
+    console.log("input string", input_string);
+    let cityDetails = "";
+    fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
+      .then((response) => response.json())
+      .then((body) => body[0].split(", "))
+      .then((details) => {
+        cityDetails = details;
+        return fetch(
+          `http://localhost:4000/weather?city=${cityDetails[0]}&state=${cityDetails[1]}&country${cityDetails[2]}`
+        );
+      })
+      .then((response) => response.json())
+      .then((body) => {
+        console.log(body);
+        console.log("cityDetails", cityDetails);
+        handleNewCity({
+          name: {
+            name: cityDetails[0],
+            state: cityDetails[1],
+            country: cityDetails[2],
+          },
+          weather: body,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onInputChange = (_, input_string) => {
+    fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
+      .then((response) => response.json())
+      .then((body) => {
+        console.log(body);
+        setAutocompleteList(body);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <Autocomplete
         id="navbar"
-        onInputChange={(_, input_string) => {
-          fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
-            .then((response) => response.json())
-            .then((body) => {
-              console.log(body)
-              setAutocompleteList(body)
-            })
-            .catch(err => console.log(err))
-        }}
         freeSolo={true}
-        getOptionLabel={(option) => option}
-        options={["Banana", "yeet"]}
+        onInputChange={onInputChange}
+        onChange={onChange}
+        options={autocompleteList}
         style={{ width: 350, margin: 20 }}
-        // getOptionLabel={(option) => `${option.name}`} //filter value
         renderInput={(params) => {
           return (
             <TextField
@@ -56,10 +85,7 @@ export function NavBar(props) {
             />
           );
         }}
-        renderOption={(option) => {
-          return <h4>{`${option.name}`}</h4>; //display value
-        }}
-        PopperComponent={CustomPopper} //required (as far as I can tell) in order to target popper elements for custom styling
+        PopperComponent={CustomPopper}
       />
     </>
   );

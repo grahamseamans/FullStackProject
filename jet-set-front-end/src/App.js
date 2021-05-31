@@ -24,13 +24,16 @@ function App() {
   const [cityList, setCityList] = useState([]);
 
   const handleNewCity = (newCity) => {
-    if (cityList.find(({ name, state }) => name === newCity.name && state === newCity.state)) return;
+    console.log("Adding new city", newCity);
+    if (cityList.find(({ name: { name, state } }) => {
+      return name === newCity.name.name && state === newCity.name.state;
+    }))
+      return
+    console.log(newCity);
     setCityList([...cityList, newCity]);
   };
-  // const [cityList, setCityList] = useState([]); // how we'll initialize when we have backend hooked up
   return (
     <>
-      {/* <NavBar cityList={cityList} /> */}
       <NavBar handleNewCity={handleNewCity} />
       <CityWrapper cityList={cityList}></CityWrapper>
     </>
