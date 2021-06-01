@@ -69,7 +69,7 @@ function randomCoridinate() {
 }
 
 function windToSpin(wind) {
-  return wind / 5000 + Math.random() / 10;
+  return wind / 500 + Math.random() / 10;
 }
 
 function colorsFromTemp(temp) {
