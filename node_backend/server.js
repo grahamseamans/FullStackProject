@@ -52,6 +52,39 @@ app.get('/weather', (req, res) => {
             console.log(err)});
 })
 
+app.get('/forecast', (req, res) => {
+
+    let city;
+    let country;
+    let state;
+
+    if(req.query.city !== undefined)
+        city = req.query.city
+    else
+        city = ""
+
+    if(req.query.city !== undefined)
+        country = req.query.country
+    else
+        country = ""
+
+    if(req.query.city !== undefined)
+        state = req.query.state
+    else
+        state = ""
+
+    console.log(`received forecast request for: ${city}`);
+
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&${state}&${country}&APPID=${weather_api}`)
+        .then(res => res.json())
+        .then(json => {            
+            res.send(json)
+        })
+        .catch(err => {
+            res.send(error);
+            console.log(err)});
+})
+
 app.get('/events', (req, res) => {
 
     let city;
