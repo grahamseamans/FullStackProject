@@ -1,23 +1,37 @@
 import { createContext, useContext, useState } from "react";
+// import { useHistory } from "react-router-dom";
+import { kelvinToFarenheit } from "./Utils";
 
 const CityContext = createContext({
   cityList: [],
   handleNewCity: (city) => {},
-  getCityFromUrl: (url) => {},
+  getCityFromUrlString: (url) => {},
   getCityUrl: (city) => {},
+  stringToNewCity: (inputString) => {},
 });
 
 export const useCityContext = () => useContext(CityContext);
 
 export const CityProvider = ({ children }) => {
   const [cityList, setCityList] = useState([]);
+  // const history = useHistory();
+
+  const stringToNewCity = async (input_string) => {
+    if (!input_string) return;
+    return fetch(`http://localhost:4000/cityInfo?input=${input_string}`)
+      .then((response) => response.json())
+      .then((body) => {
+        body = fixCity(body);
+        return body;
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleNewCity = (newCity) => {
-    console.log("Adding new city", newCity);
     if (!inCityList(cityList, newCity)) setCityList([newCity, ...cityList]);
   };
 
-  const getCityFromUrl = (url) => {
+  const getCityFromUrlString = async (url) => {
     const cityNameList = url.split("-");
     const foundCity = cityList.find(
       (city) =>
@@ -25,9 +39,24 @@ export const CityProvider = ({ children }) => {
         cityNameList[1] === city.state &&
         cityNameList[2] === city.country
     );
-    console.log(foundCity.name);
-    return foundCity;
+    if (foundCity) {
+      return foundCity;
+    } else {
+      const newCity = await stringToNewCity(url);
+      handleNewCity(newCity);
+      return newCity;
+    }
   };
+
+  function fixCity(city) {
+    const temp = city.weather.main;
+    temp.temp = kelvinToFarenheit(temp.temp);
+    temp.feels_like = kelvinToFarenheit(temp.feels_like);
+    temp.temp_min = kelvinToFarenheit(temp.temp_min);
+    temp.temp_max = kelvinToFarenheit(temp.temp_max);
+    return city;
+  }
+
   const getCityUrl = (city) => {
     const string = "/" + city.name + "-" + city.state + "-" + city.country;
     console.log("getting city url string: ", string);
@@ -39,8 +68,9 @@ export const CityProvider = ({ children }) => {
       value={{
         cityList,
         handleNewCity,
-        getCityFromUrl,
+        getCityFromUrlString,
         getCityUrl,
+        stringToNewCity,
       }}
     >
       {children}

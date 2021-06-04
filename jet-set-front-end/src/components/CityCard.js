@@ -38,6 +38,7 @@ const useStyles = makeStyles(() => {
 });
 
 export function CityCard(props) {
+  console.log("cityCard rendering")
   const { city } = props;
   const history = useHistory();
   const classes = useStyles();
@@ -45,13 +46,13 @@ export function CityCard(props) {
 
   const onClickRoute = () => history.push(getCityUrl(city));
 
-  let locDesc = ""
+  let locDesc = "";
   if (city.state) {
-    locDesc = city.state + ", " + city.country
+    locDesc = city.state + ", " + city.country;
+  } else {
+    locDesc = city.country;
   }
-  else {
-    locDesc = city.country
-  }
+
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -59,9 +60,7 @@ export function CityCard(props) {
           <Button onClick={onClickRoute}>{city.name}</Button>
         </CardActions>
         <CardContent>
-          <Typography color="textSecondary">
-            {locDesc}
-          </Typography>
+          <Typography color="textSecondary">{locDesc}</Typography>
           <Typography variant="h5" component="h2">
             Weather
           </Typography>

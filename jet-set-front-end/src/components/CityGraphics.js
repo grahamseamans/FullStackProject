@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-
+import { colorsFromTemp } from "./Utils";
 /*
 Cubes:
 Get random number of them
@@ -70,21 +70,4 @@ function randomCoridinate() {
 
 function windToSpin(wind) {
   return wind / 500 + Math.random() / 10;
-}
-
-function colorsFromTemp(temp) {
-  // https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
-  const maxTemp = 110;
-  const minTemp = -10;
-  const maxColor = 255;
-  const minColor = 0;
-  temp += (Math.random() - 1) * 5;
-  temp = temp > maxTemp ? maxTemp : temp;
-  temp = temp < minTemp ? minTemp : temp;
-  let color =
-    (maxColor - minColor) * ((temp - minTemp) / (maxTemp - minTemp)) + minColor;
-  const avgColor = (maxColor - minColor) / 2;
-  color = (color - avgColor) * -1 + avgColor;
-  let colorString = "hsl(" + color + ", 100%, 50%)";
-  return colorString;
 }

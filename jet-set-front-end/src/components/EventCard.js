@@ -30,7 +30,6 @@ const useStyles = makeStyles(() => {
 export function EventCard(props) {
   const { event } = props;
   const classes = useStyles();
-
   return (
     <Card className={classes.root}>
       <div className={classes.details}>

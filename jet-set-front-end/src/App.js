@@ -12,8 +12,8 @@ import { CityProvider } from "./components/CityContext";
 
 function App() {
   return (
-    <CityProvider>
-      <Router>
+    <Router>
+      <CityProvider>
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -25,8 +25,8 @@ function App() {
             <div>I am a city event page</div>
           </Route>
         </Switch>
-      </Router>
-    </CityProvider>
+      </CityProvider>
+    </Router>
   );
 }
 
