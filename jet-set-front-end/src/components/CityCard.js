@@ -45,6 +45,13 @@ export function CityCard(props) {
 
   const onClickRoute = () => history.push(getCityUrl(city));
 
+  let locDesc = ""
+  if (city.state) {
+    locDesc = city.state + ", " + city.country
+  }
+  else {
+    locDesc = city.country
+  }
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
@@ -53,7 +60,7 @@ export function CityCard(props) {
         </CardActions>
         <CardContent>
           <Typography color="textSecondary">
-            {city.state}, {city.country}
+            {locDesc}
           </Typography>
           <Typography variant="h5" component="h2">
             Weather
