@@ -11,7 +11,7 @@ autocomplete_api = process.env.AUTOCOMPLETE_API_KEY;
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static('../jet-set-front-end/build'))
+app.use(express.static('jet-set-front-end/build'))
 
 
 function checkResponseStatus(res) {
