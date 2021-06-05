@@ -17,7 +17,7 @@ function App() {
             <HomePage />
           </Route>
           <Route exact path="/:cityIdString">
-            <CityPage />
+            <CityPage >yeet in app.js</CityPage>
           </Route>
           <Route path="/:cityIdString/events">
             <div>I am a city event page</div>

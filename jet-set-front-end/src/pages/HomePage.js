@@ -22,7 +22,7 @@ export function HomePage() {
       <NavBar className={classes.nav}/>
       <CityWrapper
         className={classes.wrapper}
-      ></CityWrapper>
+      >yeet in citywrapper</CityWrapper>
     </>
   );
 }
