@@ -3,8 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
 } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { CityPage } from "./pages/CityPage";
