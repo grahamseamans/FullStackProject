@@ -3,6 +3,14 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
+function formatDate(inputDate) {
+  var date = new Date(inputDate);
+  if (!isNaN(date.getTime())) {
+      // Months use 0 index.
+      return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+  }
+}
+
 const useStyles = makeStyles(() => {
   let backgroundColor = "beige";
   return {
@@ -30,20 +38,26 @@ const useStyles = makeStyles(() => {
 export function EventCard(props) {
   const { event } = props;
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardContent>
-          <Typography color="textSecondary">
+          <Typography variant="h5" color="textPrimary">
             {event.name}
           </Typography>
-          <Typography color="textSecondary">
+          <Typography variant="h6" color="textSecondary">
             {event.venue_name}
+          </Typography>
+          <Typography color="textSecondary">
+            {formatDate(event.date)}
           </Typography>
         </CardContent>
       </div>
       <div className={classes.secondColumn}>
-        <Typography color="textSecondary">Info: {event.info}</Typography>
+        <Typography color="textSecondary">
+          <span id="event-notice">Event notice: </span>{event.info}
+        </Typography>
       </div>
     </Card>
   );
