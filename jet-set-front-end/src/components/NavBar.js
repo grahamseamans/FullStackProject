@@ -34,7 +34,7 @@ export function NavBar(props) {
   const onChange = (_, input_string) => {
     if (!input_string) return;
     console.log("input string", input_string);
-    fetch(`/cityInfo?input=${input_string}`)
+    fetch(`/api/cityInfo?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
         console.log("cityObject", body);
