@@ -47,6 +47,8 @@ app.get('/', (req, res) => {
             "/weather?city={city}&state={state}&country={country}",
             "/forecast?city={city}&state={state}&country={country}",
             "/events?city={city}&state={state_code}&country_code={country_code}&keyword={keyword}",
+            "/venues?state={state_code}&country_code={country_code}&keyword={keyword}",
+            "/event_info?event_id={event_id}",
             "/autocomplete?input={input_string}"
         ]
       
@@ -142,7 +144,7 @@ app.get('/weather', (req, res) => {
             res.send(json)
         })
         .catch(err => {
-            res.send(error);
+            res.send(err);
             console.log(err)});
 })
 
@@ -249,7 +251,7 @@ app.get('/forecast', (req, res) => {
             res.send(json)
         })
         .catch(err => {
-            res.send(error);
+            res.send(err);
             console.log(err)});
 })
 
@@ -325,6 +327,7 @@ app.get('/events', (req, res) => {
 
             let name;
             let url;
+            let id;
             let date;
             let time;
             let info;
@@ -351,6 +354,10 @@ app.get('/events', (req, res) => {
                     url = event.url;
                 else
                     url = '';
+                if(event.id !== undefined)
+                    id = event.id;
+                else
+                    id = '';    
                 if(event.dates.start.localDate !== undefined)
                     date = event.dates.start.localDate;
                 else
@@ -399,6 +406,7 @@ app.get('/events', (req, res) => {
                 let event_object  = {
                     name: name,
                     url: url,
+                    id: id,
                     date: date,
                     time: time,
                     info: info,
@@ -421,7 +429,7 @@ app.get('/events', (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.send(error)});
+            res.send(err)});
 })
 
 //This is an endpoint to use the google places autocomplete API.
@@ -466,7 +474,7 @@ app.get('/autocomplete', (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.send(error)});
+            res.send(err)});
 })
 
 //This is an endpoint that accesses the ticketmaster venue API call.
@@ -588,7 +596,143 @@ app.get('/venues', (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.send(error)});
+            res.send(err)});
+})
+
+//The endpoint returns data about a specific event that is looked up by
+//its id parameter that can be found from previous event queries, so that
+//an individual event data can be returned.  the only parameter that has to
+//be sent in to the endpoint is the the event id.
+/*
+JSON return object:
+    {
+        name:
+        url:
+        date:
+        time:
+        price_min:
+        price_max:
+        seatmap_url:
+        venue_name:
+        venue_city:
+        venue_state:
+        venue_country:
+        venue_address:
+    }
+*/
+app.get('/event_info', (req, res) => {
+
+    let event_id;
+    
+    if(req.query.event_id)
+        event_id = req.query.event_id;
+    else
+        event_id = '';
+
+   
+    console.log(`received event request for: 
+    ` + `event_id: ${event_id}`);
+
+    fetch(`https://app.ticketmaster.com/discovery/v2/events/${event_id}?apikey=${ticketmaster_api}`)
+        .then(checkResponseStatus)
+        .then(res => res.json())
+        .then(json => {
+
+            let name;
+            let url;
+            let date;
+            let time;
+            let price_min;
+            let price_max;
+            let seatmap_url;
+            let venue_name;
+            let venue_city;
+            let venue_state;
+            let venue_country;
+            let venue_address;
+
+            if(json.id === event_id)
+            {
+                          
+                console.log(json);
+
+                if(json.name !== undefined)
+                    name = json.name;
+                else
+                    name = '';
+                if(json.url !== undefined)
+                    url = json.url;
+                else
+                    url = '';
+                if(json.dates.start.localDate !== undefined)
+                    date = json.dates.start.localDate;
+                else
+                    date = '';
+                if(json.dates.start.localTime !== undefined)
+                    time = json.dates.start.localTime;
+                else
+                    time = '';
+                if(json.priceRanges !== undefined)
+                    price_min = json.priceRanges[0].min;
+                else
+                    price_min = '';
+                if(json.priceRanges !== undefined)
+                    price_max = json.priceRanges[0].max;
+                else
+                    price_max = '';
+                if(json.seatmap !== undefined)
+                    seatmap_url = json.seatmap.staticURL;
+                else
+                    seatmap_url = '';
+                if(json._embedded.venues !== undefined)
+                    venue_name = json._embedded.venues[0].name;
+                else
+                    venue_name = '';
+                if(json._embedded.venues !== undefined)
+                    venue_city = json._embedded.venues[0].city.name;
+                else
+                    venue_city = '';
+                if(json._embedded.venues !== undefined)
+                    venue_state = json._embedded.venues[0].state.name;
+                else
+                    venue_state = '';
+                if(json._embedded.venues !== undefined)
+                    venue_country = json._embedded.venues[0].country.name
+                else
+                    venue_country = '';
+                if(json._embedded.venues !== undefined)
+                    venue_address = json._embedded.venues[0].address.line1;
+                else
+                    venue_address = '';
+
+                let event_object  = {
+                    name: name,
+                    url: url,
+                    date: date,
+                    time: time,
+                    price_min: price_min,
+                    price_max: price_max,
+                    seatmap_url: seatmap_url,
+                    venue_name: venue_name,
+                    venue_city: venue_city,
+                    venue_state: venue_state,
+                    venue_country: venue_country,
+                    venue_address: venue_address
+                }
+
+                console.log(event_object)
+                res.send(JSON.stringify(event_object));
+            }
+            else
+            {
+                res.send(JSON.stringify({
+                    message: "The event id was not for a valid event"
+                }))
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.send(err)});
 })
 
 //starts server at the specified port, which is local:host:3000 for dev purposes.
