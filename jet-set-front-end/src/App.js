@@ -14,8 +14,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <div>main page</div>
-            {/* <HomePage /> */}
+            <HomePage />
           </Route>
           <Route exact path="/:cityIdString">
             <CityPage ></CityPage>
