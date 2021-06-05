@@ -12,7 +12,7 @@ const kelvinToFarenheit = (temp) => Math.round((temp - 273.15) * (9 / 5) + 32);
 export const eventsFromCity = (city) => {
     console.log("city argument for eventsFromCity", city)
   return  fetch(
-    `/api/events?city=${city.name}&state_code=${city.state}&country_code${city.country}`
+    `/events?city=${city.name}&state_code=${city.state}&country_code${city.country}`
   )
     .then((response) => response.json())
     .then((events) => {
