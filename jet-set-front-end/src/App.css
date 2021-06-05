@@ -4,3 +4,36 @@
   flex-direction: row;
   justify-content: center;
 }
+
+#event-notice {
+  font-style: italic;
+}
+
+.eventP {
+  padding-top: 25px;
+}
+
+.back-button {
+  color: gray;
+  margin: 20px;
+  font-size: 50px;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  filter: brightness(0.4);
+}
+
+.findTickets {
+  text-decoration: none;
+}
+
+#ticketDiv {
+  margin-top: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  #search-bar {
+    background: black;
+  }
+}

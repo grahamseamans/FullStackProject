@@ -221,6 +221,7 @@ app.get("/events", (req, res) => {
 
 app.get("/autocomplete", (req, res) => {
   let city = req.query.city;
+  console.log(req.query.input);
   let input_string = req.query.input;
   console.log(`received /autocomplete request for: ${city}`);
 
