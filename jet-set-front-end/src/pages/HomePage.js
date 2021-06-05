@@ -16,13 +16,12 @@ const useStyles = makeStyles(() => {
 });
 
 export function HomePage() {
+  console.log("in the HomePage");
   const classes = useStyles();
   return (
     <>
-      <NavBar className={classes.nav}/>
-      <CityWrapper
-        className={classes.wrapper}
-      ></CityWrapper>
+      <NavBar className={classes.nav} />
+      <CityWrapper className={classes.wrapper}></CityWrapper>
     </>
   );
 }
