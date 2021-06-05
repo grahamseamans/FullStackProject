@@ -15,6 +15,7 @@ app.use(cors());
 // app.use(express.static(path.join(__dirname, 'jet-set-front-end/build')));
 
 function checkResponseStatus(res) {
+  console.log("checkingResponseStatus for", res)
   if (res.ok) {
     return res;
   } else {
@@ -221,9 +222,9 @@ app.get("/events", (req, res) => {
 });
 
 app.get("/autocomplete", (req, res) => {
-  let city = req.query.city;
   let input_string = req.query.input;
-  console.log(`received /autocomplete request for: ${city}`);
+  console.log(req)
+  console.log(`received /autocomplete request for: ${input_string}`);
 
   fetch(
     `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input_string}&types=(cities)&key=${autocomplete_api}`
@@ -231,6 +232,7 @@ app.get("/autocomplete", (req, res) => {
     .then(checkResponseStatus)
     .then((res) => res.json())
     .then((json) => {
+      console.log(json)
       names = [];
       json.predictions.forEach((guess) => {
         names.push(guess.description);
