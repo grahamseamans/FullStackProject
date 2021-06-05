@@ -4,7 +4,8 @@
   "description": "full_stack class project",
   "main": "server.js",
   "scripts": {
-    "start": "npm ./server.js",
+    "start": "node server.js",
+    "heroku-postbuild": "cd jet-set-front-end && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
