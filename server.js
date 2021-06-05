@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 var cors = require("cors");
 require("dotenv").config();
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 weather_api = process.env.OPEN_WEATHER_API_KEY;
 ticketmaster_api = process.env.TICKETMASTER_API_KEY;
