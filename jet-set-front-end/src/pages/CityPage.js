@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { CityCard } from "../components/CityCard";
 import { useCityContext } from "../components/CityContext";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { EventCardWrapper } from "../components/EventCardsWrapper";
 import { MultiDayWeatherWrapper } from "../components/MultiDayWeatherWrapper";
 import { eventsFromCity, multiDayWeatherFromCity } from "../components/Utils";
@@ -45,6 +45,7 @@ export function CityPage(props) {
 
   return (
     <>
+      <Link className="back-button" to="/"><span>&#8592;</span></Link>
       {city && eventsSet.current && weatherSet.current && (
         <CityCard city={city} />
       )}
