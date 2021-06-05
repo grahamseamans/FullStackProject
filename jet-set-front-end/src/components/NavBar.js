@@ -5,7 +5,7 @@ import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { useCityContext } from "./CityContext";
 
-// const fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) =>
   createStyles({

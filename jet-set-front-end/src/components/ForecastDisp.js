@@ -29,5 +29,7 @@ export function ForecastDisp(props) {
   const { day } = props;
   const color = colorsFromTemp(day);
   const classes = useStyles({ backgroundColor: color });
-  return <div className={classes.root}></div>;
+  return <div className={classes.root}>
+    <span>day</span>
+  </div>;
 }

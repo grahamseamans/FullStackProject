@@ -1,24 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { CityCard } from "../components/CityCard";
 import { useCityContext } from "../components/CityContext";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { EventCardWrapper } from "../components/EventCardsWrapper";
 import { MultiDayWeatherWrapper } from "../components/MultiDayWeatherWrapper";
 import { eventsFromCity, multiDayWeatherFromCity } from "../components/Utils";
-// import { makeStyles } from "@material-ui/core/styles";
-
-// const useStyles = makeStyles(() => {
-//   return {
-//     nav: {
-//       position: "relative",
-//       zIndex: 10,
-//     },
-//     wrapper: {
-//       position: "relative",
-//       zIndex: 0,
-//     },
-//   };
-// });
 
 export function CityPage(props) {
   console.log("banana");
@@ -37,7 +23,6 @@ export function CityPage(props) {
     const getCity = async () => {
       const city = await getCityFromUrlString(cityIdString);
       setCity(city);
-      console.log("called setCity");
     };
     const getEvents = async () => {
       const events = await eventsFromCity(city);
@@ -60,6 +45,7 @@ export function CityPage(props) {
 
   return (
     <>
+      <Link className="back-button" to="/"><span>&#8592;</span></Link>
       {city && eventsSet.current && weatherSet.current && (
         <CityCard city={city} />
       )}
