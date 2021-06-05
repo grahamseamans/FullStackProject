@@ -12,11 +12,9 @@ autocomplete_api = process.env.AUTOCOMPLETE_API_KEY;
 
 app.use(express.json());
 app.use(cors());
-// app.use(express.static(path.join(__dirname, 'jet-set-front-end/build')));
 app.use(express.static('./jet-set-front-end/build'));
 
 function checkResponseStatus(res) {
-  console.log("checkingResponseStatus for", res)
   if (res.ok) {
     return res;
   } else {
@@ -153,7 +151,6 @@ app.get("/events", (req, res) => {
 
       if (json.page.totalElements > 0) {
         json._embedded.events.forEach((event) => {
-          console.log(event);
 
           if (event.name !== undefined) name = event.name;
           else name = "";
@@ -224,7 +221,6 @@ app.get("/events", (req, res) => {
 
 app.get("/autocomplete", (req, res) => {
   let input_string = req.query.input;
-  console.log(req)
   console.log(`received /autocomplete request for: ${input_string}`);
 
   fetch(
