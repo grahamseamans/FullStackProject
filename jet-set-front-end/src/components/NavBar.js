@@ -3,8 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-import { fixCity } from "./Utils";
-import { useCityContext } from "./CityContext"
+import { useCityContext } from "./CityContext";
 
 const fetch = require("node-fetch");
 
@@ -27,28 +26,19 @@ const CustomPopper = function (props) {
 };
 
 export function NavBar(props) {
-
-  const { handleNewCity } = useCityContext();
+  const { stringToNewCity, handleNewCity } = useCityContext();
   const [autocompleteList, setAutocompleteList] = useState([]);
 
-  const onChange = (_, input_string) => {
-    if (!input_string) return;
-    console.log("input string", input_string);
-    fetch(`http://localhost:4000/cityInfo?input=${input_string}`)
-      .then((response) => response.json())
-      .then((body) => {
-        console.log("cityObject", body);
-        body = fixCity(body)
-        return handleNewCity(body);
-      })
-      .catch((err) => console.log(err));
+  const onChange = async (_, input_string) => {
+    const newCity = await stringToNewCity(input_string);
+    handleNewCity(newCity);
+    return newCity;
   };
 
   const onInputChange = (_, input_string) => {
     fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
-        console.log(body);
         setAutocompleteList(body);
       })
       .catch((err) => console.log(err));

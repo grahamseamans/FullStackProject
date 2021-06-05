@@ -48,9 +48,15 @@ app.get("/cityInfo", (req, res) => {
     .then((res) => res.json())
     .then((json) => {
       const guessTerms = json.predictions[0].terms;
-      newCity.name = guessTerms[0].value;
-      newCity.state = guessTerms[1].value;
-      newCity.country = guessTerms[2].value;
+      if (guessTerms.length === 2) {
+        newCity.name = guessTerms[0].value;
+        newCity.state = "";
+        newCity.country = guessTerms[1].value;
+      } else {
+        newCity.name = guessTerms[0].value;
+        newCity.state = guessTerms[1].value;
+        newCity.country = guessTerms[2].value;
+      }
       return newCity;
     })
     .then((newCity) =>

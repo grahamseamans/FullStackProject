@@ -1,23 +1,41 @@
-export function fixCity(city) {
-  const temp = city.weather.main;
-  temp.temp = kelvinToFarenheit(temp.temp);
-  temp.feels_like = kelvinToFarenheit(temp.feels_like);
-  temp.temp_min = kelvinToFarenheit(temp.temp_min);
-  temp.temp_max = kelvinToFarenheit(temp.temp_max);
-  return city;
-}
 
-const kelvinToFarenheit = (temp) => Math.round((temp - 273.15) * (9 / 5) + 32);
+export const kelvinToFarenheit = (temp) => Math.round((temp - 273.15) * (9 / 5) + 32);
+
+export const multiDayWeatherFromCity = (city) => {
+  return  fetch(
+    `http://localhost:4000/weather?city=${city.name}&state=${city.state}&country${city.country}`
+  )
+    .then((response) => response.json())
+    .then((weather) => {
+      return weather;
+    })
+    .catch((err) => console.log(err));
+};
 
 export const eventsFromCity = (city) => {
-    console.log("city argument for eventsFromCity", city)
   return  fetch(
     `http://localhost:4000/events?city=${city.name}&state_code=${city.state}&country_code${city.country}`
   )
     .then((response) => response.json())
     .then((events) => {
-      console.log("Event object", events);
       return events;
     })
     .catch((err) => console.log(err));
 };
+
+export function colorsFromTemp(temp) {
+  // https://stats.stackexchange.com/questions/281162/scale-a-number-between-a-range
+  const maxTemp = 110;
+  const minTemp = -10;
+  const maxColor = 255;
+  const minColor = 0;
+  temp += (Math.random() - 1) * 5;
+  temp = temp > maxTemp ? maxTemp : temp;
+  temp = temp < minTemp ? minTemp : temp;
+  let color =
+    (maxColor - minColor) * ((temp - minTemp) / (maxTemp - minTemp)) + minColor;
+  const avgColor = (maxColor - minColor) / 2;
+  color = (color - avgColor) * -1 + avgColor;
+  let colorString = "hsl(" + Math.round(color) + ", 100%, 50%)";
+  return colorString;
+}
