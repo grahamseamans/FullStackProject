@@ -6,7 +6,7 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { fixCity } from "./Utils";
 import { useCityContext } from "./CityContext"
 
-// const fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) =>
   createStyles({
