@@ -4,17 +4,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-function formatDate(inputDate) {
-  var date = new Date(inputDate);
-  if (!isNaN(date.getTime())) {
-      // Months use 0 index.
-      return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
-  }
-}
-
-const useStyles = makeStyles(() => {
+const useStyles = makeStyles((theme) => {
   let backgroundColor = "beige";
   return {
     root: {
@@ -22,9 +13,13 @@ const useStyles = makeStyles(() => {
       flexDirection: "column",
       minHeight: 300,
       minWidth: 250,
+      maxWidth: 1200,
       padding: 10,
       margin: 20,
       backgroundColor: backgroundColor,
+      [theme.breakpoints.down(768)]: {
+        maxWidth: 300
+      }
     },
     details: {
       color: "black",
@@ -58,7 +53,6 @@ function displayEvent(string) {
 export function EventCard(props) {
   const { event } = props;
   const classes = useStyles();
-  const matches = useMediaQuery('(min-width:768px)');
 
   return (
     <Card className={classes.root} id="event-card">
@@ -77,11 +71,13 @@ export function EventCard(props) {
             <span id="event-notice">{displayEvent(event.info)}</span> {event.info}
           </Typography>
         </CardContent>
-        <CardActions className="ticketButton">
-          <a href={event.url}  className="findTickets" rel="noreferrer" target="_blank">
-            <Button size="small">Find Tickets</Button>
-          </a>
-        </CardActions>
+        <div id="ticketDiv">
+          <CardActions className="ticketButton">
+            <a href={event.url}  className="findTickets" rel="noreferrer" target="_blank">
+              <Button size="small">Find Tickets</Button>
+            </a>
+          </CardActions>
+        </div>
       </div>
     </Card>
   );

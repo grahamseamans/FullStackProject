@@ -27,3 +27,13 @@
 .findTickets {
   text-decoration: none;
 }
+
+#ticketDiv {
+  margin-top: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  #search-bar {
+    background: black;
+  }
+}

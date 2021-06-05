@@ -12,9 +12,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       "& .MuiAutocomplete-listbox": {
         border: "2px grey",
-        minHeight: 200,
-        // "& li:nth-child(even)": { backgroundColor: "#CCC" },
-        // "& li:nth-child(odd)": { backgroundColor: "#FFF" },
+        minHeight: 200
       },
     },
   })
