@@ -14,10 +14,11 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <HomePage />
+            <div>main page</div>
+            {/* <HomePage /> */}
           </Route>
           <Route exact path="/:cityIdString">
-            <CityPage >yeet in app.js</CityPage>
+            <CityPage ></CityPage>
           </Route>
           <Route path="/:cityIdString/events">
             <div>I am a city event page</div>
