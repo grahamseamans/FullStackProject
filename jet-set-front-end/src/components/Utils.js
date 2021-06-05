@@ -3,7 +3,7 @@ export const kelvinToFarenheit = (temp) => Math.round((temp - 273.15) * (9 / 5) 
 
 export const multiDayWeatherFromCity = (city) => {
   return  fetch(
-    `http://localhost:4000/weather?city=${city.name}&state=${city.state}&country${city.country}`
+    `/weather?city=${city.name}&state=${city.state}&country${city.country}`
   )
     .then((response) => response.json())
     .then((weather) => {
@@ -14,7 +14,7 @@ export const multiDayWeatherFromCity = (city) => {
 
 export const eventsFromCity = (city) => {
   return  fetch(
-    `http://localhost:4000/events?city=${city.name}&state_code=${city.state}&country_code${city.country}`
+    `/events?city=${city.name}&state_code=${city.state}&country_code${city.country}`
   )
     .then((response) => response.json())
     .then((events) => {

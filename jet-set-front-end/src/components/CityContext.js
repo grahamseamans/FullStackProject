@@ -18,7 +18,7 @@ export const CityProvider = ({ children }) => {
 
   const stringToNewCity = async (input_string) => {
     if (!input_string) return;
-    return fetch(`http://localhost:4000/cityInfo?input=${input_string}`)
+    return fetch(`/cityInfo?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
         body = fixCity(body);

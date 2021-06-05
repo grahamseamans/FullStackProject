@@ -34,7 +34,7 @@ export function NavBar(props) {
   };
 
   const onInputChange = (_, input_string) => {
-    fetch(`http://localhost:4000/autocomplete?input=${input_string}`)
+    fetch(`/autocomplete?input=${input_string}`)
       .then((response) => response.json())
       .then((body) => {
         setAutocompleteList(body);

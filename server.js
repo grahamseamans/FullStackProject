@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { response } = require('express');
 require('dotenv').config();
 const app = express()
-const port = 4000
+const port = process.env.PORT || 4000
 
 //API keys that get pulled from untracked .env file and loaded in
 //to process variables so that they aren't kept in GitHub
