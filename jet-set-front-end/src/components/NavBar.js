@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) =>
     root: {
       "& .MuiAutocomplete-listbox": {
         border: "2px grey",
-        minHeight: 200
+        minHeight: 200,
+      },
+      NavBar: {
+        width: 350,
+        margin: 20,
       },
     },
   })
@@ -26,8 +30,10 @@ const CustomPopper = function (props) {
 export function NavBar(props) {
   const { stringToNewCity, handleNewCity } = useCityContext();
   const [autocompleteList, setAutocompleteList] = useState([]);
+  // const classes = useStyles();
 
   const onChange = async (_, input_string) => {
+    if (!input_string) return;
     const newCity = await stringToNewCity(input_string);
     handleNewCity(newCity);
     return newCity;
@@ -43,26 +49,22 @@ export function NavBar(props) {
   };
 
   return (
-    <>
-      <Autocomplete
-        props
-        id="navbar"
-        freeSolo={true}
-        onChange={onChange}
-        onInputChange={onInputChange}
-        options={autocompleteList}
-        style={{ width: 350, margin: 20 }}
-        renderInput={(params) => {
-          return (
-            <TextField
-              {...params}
-              variant="outlined"
-              label="Search a city..."
-            />
-          );
-        }}
-        PopperComponent={CustomPopper}
-      />
-    </>
+    // <>
+    <Autocomplete
+      props
+      id="navbar"
+      freeSolo={true}
+      onChange={onChange}
+      onInputChange={onInputChange}
+      options={autocompleteList}
+      style={{ maxWidth: 325, margin: 20, width: "100%" }}
+      renderInput={(params) => {
+        return (
+          <TextField {...params} variant="outlined" label="Search a city..." />
+        );
+      }}
+      PopperComponent={CustomPopper}
+    />
+    // </>
   );
 }

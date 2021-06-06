@@ -8,6 +8,7 @@ const CityContext = createContext({
   getCityFromUrlString: (url) => {},
   getCityUrl: (city) => {},
   stringToNewCity: (inputString) => {},
+  fixCity: (city) => {},
 });
 
 export const useCityContext = () => useContext(CityContext);
@@ -71,6 +72,7 @@ export const CityProvider = ({ children }) => {
         getCityFromUrlString,
         getCityUrl,
         stringToNewCity,
+        fixCity,
       }}
     >
       {children}
@@ -79,6 +81,7 @@ export const CityProvider = ({ children }) => {
 };
 
 const inCityList = (cityList, newCity) => {
+  if (!newCity) return true;
   if (
     cityList.find(({ name, state, country }) => {
       return (

@@ -1,28 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { colorsFromTemp } from "./Utils";
-/*
-Cubes:
-Get random number of them
-
-Lighting:
-see if you can get 
-
-spinning:
-log the wind to get a more normaized value
-scale the logged value
-add that to the spin
-
-Colors:
-So I want a funciton that:
-Takes in a temperature
-puts it to a color
-- lets go rainbow 
-    - red is hottest
-    - blue is coldest
-- get two colors that are similar to the main color
-- randomly assign those to the cubes
-*/
 
 function Box(props) {
   const { temperature, wind } = props;
@@ -50,7 +28,7 @@ export function CityGraphics(props) {
   const temp = city.weather.main.feels_like;
   const windSpeed = city.weather.wind.speed;
   return (
-    <Canvas>
+    <Canvas >
       <ambientLight intensity={0.5} />
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />

@@ -32,6 +32,7 @@ const useStyles = makeStyles(() => {
     },
     graphics: {
       position: "relative",
+      width: "100%",
       flex: 1,
     },
   };

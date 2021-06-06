@@ -10,14 +10,14 @@ export function CityPage(props) {
   console.log("banana");
   const [city, setCity] = useState(null);
   const [events, setEvents] = useState([]);
-  const [multiWeather, setMultiWeather] = useState([]);
+  const [multiWeather, setMultiWeather] = useState({list:[]});
   const { cityIdString } = useParams();
   const { getCityFromUrlString } = useCityContext();
   const eventsSet = useRef(false);
   const weatherSet = useRef(false);
 
-  const multiWeater_temp = { days: [0, 20, 40, 60, 80, 100] };
-  weatherSet.current = true;
+  // const multiWeater_temp = { days: [0, 20, 40, 60, 80, 100] };
+  // weatherSet.current = true;
 
   useEffect(() => {
     const getCity = async () => {
@@ -31,6 +31,7 @@ export function CityPage(props) {
     };
     const getMultiWeather = async () => {
       const multiWeather = await multiDayWeatherFromCity(city);
+      console.log("multiweather", multiWeather)
       weatherSet.current = true;
       setMultiWeather(multiWeather);
     };
@@ -49,7 +50,7 @@ export function CityPage(props) {
       {city && eventsSet.current && weatherSet.current && (
         <CityCard city={city} />
       )}
-      <MultiDayWeatherWrapper multiWeather={multiWeater_temp} />
+      <MultiDayWeatherWrapper multiWeather={multiWeather} />
       <EventCardWrapper events={events} />
     </>
   );

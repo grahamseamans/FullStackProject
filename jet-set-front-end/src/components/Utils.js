@@ -3,11 +3,11 @@ export const kelvinToFarenheit = (temp) => Math.round((temp - 273.15) * (9 / 5) 
 
 export const multiDayWeatherFromCity = (city) => {
   return  fetch(
-    `/weather?city=${city.name}&state=${city.state}&country${city.country}`
+    `/forecast?city=${city.name}&state=${city.state}&country${city.country}`
   )
     .then((response) => response.json())
-    .then((weather) => {
-      return weather;
+    .then((forecast) => {
+      return forecast;
     })
     .catch((err) => console.log(err));
 };
@@ -36,6 +36,6 @@ export function colorsFromTemp(temp) {
     (maxColor - minColor) * ((temp - minTemp) / (maxTemp - minTemp)) + minColor;
   const avgColor = (maxColor - minColor) / 2;
   color = (color - avgColor) * -1 + avgColor;
-  let colorString = "hsl(" + Math.round(color) + ", 100%, 50%)";
+  let colorString = "hsl(" + Math.round(color) + ", 60%, 50%)";
   return colorString;
 }
