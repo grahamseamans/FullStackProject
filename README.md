@@ -28,6 +28,7 @@ Deployed here: https://city-info-web.herokuapp.com/
 ## Deployment
 
 - The dev branch is what is currently autodeployed on Heroku (link to live page at the top).
+- https://www.freecodecamp.org/news/how-to-deploy-a-react-app-with-an-express-server-on-heroku-32244fe5a250/ was used as a template for deployment.
 
 ## Authors
 
